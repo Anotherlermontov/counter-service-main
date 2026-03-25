@@ -1,5 +1,5 @@
 # Main Counter Service
-The Main Service is a separate Django-based service responsible for handling HTTP requests, reading the current counter value from the blockchain, storing the private key in PostgreSQL, signing transactions, and broadcasting them to the network.
+The Main Counter Service is a separate Django-based service responsible for handling HTTP requests, reading the current counter value from the blockchain, storing the private key in PostgreSQL, signing transactions, and broadcasting them to the network.
 
 ### Responsibilities
 - handle `GET /value`
