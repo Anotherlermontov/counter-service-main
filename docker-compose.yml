@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  counter-service:
+    build: .
+    container_name: main-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - counter-service-db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - POSTGRES_HOST=counter-service-db
+      - TX_BUILDER_URL=http://host.docker.internal:5000/increment-tx-params
+
+  counter-service-db:
+    image: postgres:16
+    container_name: main-service-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=main_service
+
+volumes:
+  postgres_data:
