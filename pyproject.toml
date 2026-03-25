@@ -1,0 +1,29 @@
+[tool.black]
+line-length = 100
+target-version = ['py310']
+skip-string-normalization = true
+skip-magic-trailing-comma = true
+exclude = '/migrations/'
+
+[tool.isort]
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+ensure_newline_before_comments = true
+use_parentheses = true
+add_imports = ['from __future__ import annotations']
+skip_gitignore = true
+skip = ['migrations']
+
+[tool.mypy]
+python_version = 3.11
+ignore_missing_imports = "true"
+allow_redefinition = "true"
+warn_no_return = "false"
+check_untyped_defs = "true"
+disallow_untyped_defs = "true"
+warn_unused_ignores = "true"
+follow_imports = "silent"
+no_implicit_reexport = "true"
+exclude = 'build|env|venv.*|migrations|tests|manage.py'
