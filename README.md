@@ -11,7 +11,7 @@ The Main Counter Service is a separate Django-based service responsible for hand
 
 ### Setup project with docker
 1. make build
-2. make up
+2. make up-d
 3. make migrate
 
 ### Setup project local:
