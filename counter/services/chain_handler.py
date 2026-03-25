@@ -5,7 +5,7 @@ from typing import Any
 from django.conf import settings
 from web3 import Web3
 
-from main_service.counter.services.exceptions import RPCNotConnectedException
+from counter.services.exceptions import RPCNotConnectedException
 
 
 class ChainHandler:
@@ -26,4 +26,4 @@ class ChainHandler:
     def send_increment_transaction(self, private_key: str, tx_params: dict[str, Any]) -> str:
         signed_tx = self.w3.eth.account.sign_transaction(tx_params, private_key=private_key)
 
-        return self.w3.eth.send_raw_transaction(signed_tx.raw_transaction)
+        return self.w3.eth.send_raw_transaction(signed_tx.raw_transaction).hex()

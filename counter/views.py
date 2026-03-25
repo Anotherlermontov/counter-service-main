@@ -6,11 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from rest_framework.request import Request
 
-from main_service.counter.forms import IncrementForm
-from main_service.counter.models import Wallet
-from main_service.counter.services.chain_handler import ChainHandler
-from main_service.counter.services.exceptions import RPCNotConnectedException
-from main_service.counter.services.tx_builder_client import get_increment_tx_params
+from counter.forms import IncrementForm
+from counter.models import Wallet
+from counter.services.chain_handler import ChainHandler
+from counter.services.exceptions import RPCNotConnectedException
+from counter.services.tx_builder_client import get_increment_tx_params
 
 
 @require_GET
@@ -59,6 +59,6 @@ def increment(request: Request) -> JsonResponse:
     except Exception as exc:
         response = JsonResponse({'error': str(exc)}, status=500)
 
-    response = JsonResponse({'tx_hash': tx_hash.hex()})
+    response = JsonResponse({'tx_hash': tx_hash})
 
     return response
