@@ -3,10 +3,9 @@ from __future__ import annotations
 import json
 
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
-from rest_framework.request import Request
 
 from counter.forms import IncrementForm
 from counter.models import Wallet
@@ -16,7 +15,7 @@ from counter.services.tx_builder_client import get_increment_tx_params
 
 
 @require_GET
-def get_value(request: Request) -> JsonResponse:
+def get_value(request: HttpRequest) -> JsonResponse:
     try:
         chain_handler = ChainHandler()
     except RPCNotConnectedException as exc:
@@ -31,7 +30,7 @@ def get_value(request: Request) -> JsonResponse:
 
 @require_POST
 @csrf_exempt
-def increment(request: Request) -> JsonResponse:
+def increment(request: HttpRequest) -> JsonResponse:
     try:
         payload = json.loads(request.body or '{}')
     except json.JSONDecodeError:
@@ -49,11 +48,11 @@ def increment(request: Request) -> JsonResponse:
         return JsonResponse({'error': 'No wallet configured in database'}, status=500)
 
     try:
-        tx_params = get_increment_tx_params(
-            counter_contract_address=settings.COUNTER_ADDRESS, from_address=wallet.address, amount=int(amount)
-        )
+        tx_params = get_increment_tx_params(counter_contract_address=settings.COUNTER_ADDRESS, amount=int(amount))
         chain_handler = ChainHandler()
-        tx_hash = chain_handler.send_increment_transaction(private_key=wallet.private_key, tx_params=tx_params)
+        tx_hash = chain_handler.send_increment_transaction(
+            public_key=wallet.address, private_key=wallet.private_key, tx_params=tx_params
+        )
         response = JsonResponse({'tx_hash': tx_hash})
     except Exception as exc:
         response = JsonResponse({'error': str(exc)}, status=500)

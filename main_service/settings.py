@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0_849cb@21mxj5=)pz@4*%9%k2b*=tcg73s-it)x(_)ziok6x1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS: list[str] = ['127.0.0.1', 'localhost', '0.0.0.0']
 
 
 # Application definition
@@ -124,6 +124,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 TX_BUILDER_URL = os.getenv('TX_BUILDER_URL', 'http://127.0.0.1:5000/increment-tx-params')
 
 RPC_URL = os.getenv('RPC_URL', 'https://sepolia-rollup.arbitrum.io/rpc')
+CHAIN_ID = int(os.getenv('CHAIN_ID', '421614'))
 COUNTER_ADDRESS = os.getenv('COUNTER_ADDRESS', '0x9b9c4929b86e63611439651e4bc0361e4e5d3602')
 COUNTER_ABI = [
     {
