@@ -26,7 +26,6 @@ def get_value(request: Request) -> JsonResponse:
         value = chain_handler.get_value()
     except Exception as exc:
         return JsonResponse({'error': str(exc)}, status=500)
-
     return JsonResponse({'value': value})
 
 
