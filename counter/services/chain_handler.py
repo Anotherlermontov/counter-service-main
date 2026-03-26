@@ -16,12 +16,22 @@ class ChainHandler:
 
         self.counter_contract_address = self.w3.to_checksum_address(settings.COUNTER_ADDRESS)
         self.counter_contract = self.w3.eth.contract(address=self.counter_contract_address, abi=settings.COUNTER_ABI)
+        self.counter_contract.functions.getValue().build_transaction
+
+    def get_base_fee(self) -> int:
+        latest_block = self.w3.eth.get_block('latest')
+        return latest_block['baseFeePerGas']
+
+    def get_max_fee_per_gas(self, max_priority_fee: int) -> int:
+        return self.get_base_fee() * 2 + max_priority_fee
 
     def get_value(self) -> int:
         return self.counter_contract.functions.getValue().call()
 
     def send_increment_transaction(self, public_key: str, private_key: str, tx_params: dict[str, str]) -> str:
         public_key_checksum = self.w3.to_checksum_address(public_key)
+        max_priority_fee = self.w3.eth.max_priority_fee
+
         tx = {
             'from': public_key_checksum,
             'to': tx_params['to'],
@@ -29,7 +39,8 @@ class ChainHandler:
             'nonce': self.w3.eth.get_transaction_count(public_key_checksum),
             'chainId': settings.CHAIN_ID,
             'gas': INCREMENT_TX_GAS_LIMIT,
-            'gasPrice': self.w3.eth.gas_price,
+            'maxPriorityFeePerGas': max_priority_fee,
+            'maxFeePerGas': self.get_max_fee_per_gas(max_priority_fee),
         }
         signed_tx = self.w3.eth.account.sign_transaction(tx, private_key=private_key)
 
