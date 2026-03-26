@@ -16,7 +16,6 @@ class ChainHandler:
 
         self.counter_contract_address = self.w3.to_checksum_address(settings.COUNTER_ADDRESS)
         self.counter_contract = self.w3.eth.contract(address=self.counter_contract_address, abi=settings.COUNTER_ABI)
-        self.counter_contract.functions.getValue().build_transaction
 
     def get_base_fee(self) -> int:
         latest_block = self.w3.eth.get_block('latest')
