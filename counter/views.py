@@ -55,6 +55,9 @@ def increment(request: HttpRequest) -> JsonResponse:
         )
         response = JsonResponse({'tx_hash': tx_hash})
     except Exception as exc:
+        import traceback
+
+        traceback.print_exc()
         response = JsonResponse({'error': str(exc)}, status=500)
 
     return response
