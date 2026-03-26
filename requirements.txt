@@ -632,12 +632,6 @@ cytoolz==1.1.0 \
 django==5.2.12 \
     --hash=sha256:4853482f395c3a151937f6991272540fcbf531464f254a347bf7c89f53c8cff7 \
     --hash=sha256:6b809af7165c73eff5ce1c87fdae75d4da6520d6667f86401ecf55b681eb1eeb
-    # via
-    #   -r requirements.in
-    #   djangorestframework
-djangorestframework==3.17.1 \
-    --hash=sha256:a6def5f447fe78ff853bff1d47a3c59bf38f5434b031780b351b0c73a62db1a5 \
-    --hash=sha256:c3c74dd3e83a5a3efc37b3c18d92bd6f86a6791c7b7d4dff62bb068500e76457
     # via -r requirements.in
 eth-abi==5.2.0 \
     --hash=sha256:178703fa98c07d8eecd5ae569e7e8d159e493ebb6eeb534a8fe973fbc4e40ef0 \
